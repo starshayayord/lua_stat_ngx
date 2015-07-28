@@ -2,7 +2,6 @@ ngx.header.content_type = "application/json"
 local keys = {}
 keys = ngx.shared.count:get_keys()
 local max = table.getn(keys)
---ngx.print("\n 1st: ", ngx.shared.tempd:get_keys(1))
 local str = ""
 str = str .. "["
 for key,value in pairs(keys) do
@@ -13,9 +12,6 @@ for key,value in pairs(keys) do
     end
 end
 
---ngx.header.content_type = "application/json"
---local str = '[{"host": "api.kontur.ru","upstreams": {"192.168.76.101:82": {"status": {"fail": ":1"}},"192.168.76.101:83": {"status": {"200": "2"}}}}]'
---local str1 ='[{"host":"edi.kontur.ru","upstream_addr":"192.168.191.1:100","status":"200","count":"1"},{"host":"edi.kontur.ru","upstream_addr":"192.168.191.2:200","status":"304","count":"1"},{"host":"edi.kontur.ru","upstream_addr":"192.168.191.2:200","status":"200","count":"2"},{"host":"api.kontur.ru","upstream_addr":"192.168.191.3:400","status":"304","count":"1"},{"host":"api.kontur.ru","upstream_addr":"192.168.191.4:500","status":"500","count":"1"},{"host":"api.kontur.ru","upstream_addr":"192.168.191.4:500","status":"200","count":"5"}]' 
 local json = require "libcjson"
 local test = json.decode(str)
 function tprint (tbl, indent)
@@ -72,10 +68,11 @@ else
   for k,v in pairs(test) do
     jmerge(v)
   end
+  ngx.print("[")
   for k,v in pairs(m_tbl) do
     local str =  json.encode(v)
-    ngx.print("\n")
     ngx.print(str)
   end
+   ngx.print("]")
 end
 
