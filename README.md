@@ -26,4 +26,4 @@ content_by_lua_file 'lua/stat/circular_buf.lua';
 access_by_lua_file 'fast-basic.lua';
 proxy_set_header Authorization "";
 ```
-
+*P.S.: json lua module: https://github.com/bungle/lua-resty-libcjson
