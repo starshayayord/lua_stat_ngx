@@ -19,6 +19,10 @@ lua_code_cache on;
 ```
 access_by_lua_file 'fast-basic.lua';
 ```
+* any location
+```
+log_by_lua_file 'lua/stat/circular_log.lua';
+```
 
 * statistics report location:
 ```
