@@ -1,10 +1,26 @@
-1. change libcjson.lua
-  local cjson = ffi_load("/opt/nginx/libcjson.so")
+1. change libcjson.lua  
+```
+local cjson = ffi_load("/opt/nginx/libcjson.so") 
+```
 to your path
-2. lua_shared_dict count 10M;   http {...}
-3. access_by_lua_file 'ms15-034.lua'; http {...}
-4. lua_package_path '/opt/nginx/?.lua'; http {...}
-5.  init_by_lua_file 'init.lua'; http {...}
-6. log_by_lua_file 'lua/stat/circular_log.lua'; anywhere  u want to monitor {...}
-7. content_by_lua_file 'lua/stat/circular_buf.lua'; anywhere location  u want to get statictic {...}
+2.  http {...}
+```
+init_by_lua_file 'init.lua';
+lua_package_path '/opt/nginx/?.lua';
+lua_shared_dict sha1 10M;
+lua_shared_dict a 10M;
+lua_shared_dict count 10M;
+access_by_lua_file 'ms15-034.lua';
+lua_code_cache on;
+```
+3. monitoring location:
+```
+access_by_lua_file 'fast-basic.lua';
+```
+4. statistics report location:
+```
+content_by_lua_file 'lua/stat/circular_buf.lua';
+access_by_lua_file 'fast-basic.lua';
+proxy_set_header Authorization "";
+```
 
